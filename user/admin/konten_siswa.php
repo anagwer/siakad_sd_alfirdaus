@@ -20,7 +20,12 @@ else if ($menu=='Tabungan') {
 }else if ($menu=='SPP') {
   include "form/pembayaran/index.php";
 }
-
+else if ($menu=='jadwal') {
+  include "form/jadwal/index.php";
+}
+else if ($menu=='penilaianakhir') {
+  include "form/penilaianakhir/index.php";
+}
 else if ($menu=='edit_akun') {
   include "form/dashboard/edit_akun.php";
 }

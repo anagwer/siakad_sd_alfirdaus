@@ -210,6 +210,7 @@ elseif ($lv=="Siswa") {
         <li><a href="?a=jadwal"><i class="fa fa-book"></i> <span>Jadwal</span></a></li>
         <li><a href="?a=pengumuman"><i class="fa fa-book"></i> <span>Pengumuman</span></a></li>  
         <li><a href="?a=presensi"><i class="fa fa-calendar-check-o"></i> <span>Presensi Siswa</span></a></li> 
+        <li><a href="?a=penilaianakhir"><i class="fa fa-file-powerpoint-o"></i> <span>Penilaian UTS/UAS</span></a></li> 
         <li><a href="?a=history_kelas"><i class="fa fa-book"></i> <span>History Kelas</span></a></li>    
         <li class="treeview">
           <a href="#">

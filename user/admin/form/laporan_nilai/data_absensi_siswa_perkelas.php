@@ -22,29 +22,6 @@ $semester = [1=>'Ganjil','Genap'];
       $id_wali_kelas = $dcekwk['id_walikelas'];
  ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="col-md-4">
    <div class="box-header with-border">
       <h3 class="box-title">

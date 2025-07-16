@@ -29,11 +29,7 @@ $semester = [1=>'Ganjil','Genap'];
    <div class="box-header with-border">
       <h3 class="box-title">
        Identitas Kelas
-
       </h3>
-      
-      
-      
     </div>
 
 <div class="col-md-6">
@@ -122,7 +118,7 @@ $semester = [1=>'Ganjil','Genap'];
 
     </h3>
    <div class="pull-right">
-     <a href="form/siswa_walikelas/print_nilai.php?id_kelas=1&id_ta=4&semester=2" class="btn btn-info btn-sm" target="_blank">Print</a>
+<a href="form/siswa_walikelas/print_nilai.php?id_kelas=<?php echo $id_kelas?>&id_ta=<?php echo $id_ta_aktif?>&semester=<?php echo $semester_ke;?>" class="btn btn-info btn-sm" target="_blank">Print</a>
    </div>
   </div>
 <?php

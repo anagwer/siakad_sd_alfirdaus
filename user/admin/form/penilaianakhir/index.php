@@ -117,13 +117,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['hapus'])) {
         </button>
 
         <?php endif; ?>
-        <button type="button" class="btn btn-success btn-sm" style="margin-bottom:15px;" onclick="printJadwal()">
+        <button type="button" class="btn btn-warning mb-3" onclick="printPenilaian()">
             <i class="fa fa-print"></i> Cetak
         </button>
 
         <script>
             function printPenilaian() {
-                var printWindow = window.open('form/penilaian/print_penilaian.php');
+                var printWindow = window.open('form/penilaianakhir/print_penilaian.php');
                 printWindow.onload = function () {
                     printWindow.print();
                     printWindow.onafterprint = function () {
@@ -158,6 +158,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['hapus'])) {
                                         FROM kelas_siswa ks 
                                         JOIN siswa s ON ks.id_siswa = s.id_siswa 
                                         WHERE ks.id_kelas = '$id_kelas'";
+                    }if ($level === 'Siswa') {
+                        $query_siswa = "SELECT s.id_siswa, s.nama_siswa 
+                                        FROM kelas_siswa ks 
+                                        JOIN siswa s ON ks.id_siswa = s.id_siswa 
+                                        WHERE ks.id_siswa = '$id_user'";
                     } else {
                         $query_siswa = "SELECT * FROM siswa";
                     }

@@ -2,6 +2,10 @@
 // Koneksi ke database
 include '../../../../assets/koneksi.php';
 
+
+$level = $_SESSION['level'];
+$id_user = $_SESSION['id_user'];
+
 // Query untuk mendapatkan data guru
 $qGuru = mysqli_query($conn, "SELECT * FROM guru");
 $dataGuru = [];
@@ -166,9 +170,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['hapus'])) {
                             </thead>
                             <tbody>
                                 <?php
+                                if($level === 'Siswa'){
+                                    $query = mysqli_query($conn, "SELECT j.*, g.nama_guru, m.nama_mapel FROM jadwal j 
+                                                            LEFT JOIN guru g ON j.id_guru = g.id_guru 
+                                                            LEFT JOIN mapel m ON j.id_mapel = m.id_mapel
+                                                            JOIN kelas_siswa k ON k.id_siswa ='$id_user'");
+                                }else{
                                 $query = mysqli_query($conn, "SELECT j.*, g.nama_guru, m.nama_mapel FROM jadwal j 
                                                             LEFT JOIN guru g ON j.id_guru = g.id_guru 
                                                             LEFT JOIN mapel m ON j.id_mapel = m.id_mapel");
+                                }
                                 $no = 1;
                                 while ($row = mysqli_fetch_assoc($query)) {
                                     echo "<tr>";
