@@ -100,7 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buat_tagihan'])) {
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0" style="text-align:center;">Halaman Pembayaran SPP</h1>
+                <h1 class="m-0" style="text-align:center;">Laporan Pembayaran SPP</h1>
+                <hr>
             </div>
         </div>
     </div>

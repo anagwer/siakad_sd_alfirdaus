@@ -77,26 +77,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buat_tagihan'])) {
 <section class="content">
     <div class="container-fluid">
 
+        <button type="button" class="btn btn-success" style="margin-bottom:20px;" onclick="printPembayaran()">
+            <i class="fa fa-print"></i> Cetak
+        </button>
+
+        <script>
+            function printPembayaran() {
+                var printWindow = window.open('form/pembayaran/print_spp.php');
+                printWindow.onload = function () {
+                    printWindow.print();
+                    printWindow.onafterprint = function () {
+                        printWindow.close();
+                    };
+                };
+            }
+        </script>
         <?php if ($level !== 'Siswa'): ?>
             <!-- Form Input SPP -->
             <button type="button" class="btn btn-primary mb-3" style="margin-bottom:20px;" data-toggle="modal" data-target="#modalTambahTagihan">
                 + Tambah Tagihan SPP
             </button>
-            <button type="button" class="btn btn-success" style="margin-bottom:20px;" onclick="printPembayaran()">
-                <i class="fa fa-print"></i> Cetak
-            </button>
-
-            <script>
-                function printPembayaran() {
-                    var printWindow = window.open('form/pembayaran/print_spp.php');
-                    printWindow.onload = function () {
-                        printWindow.print();
-                        printWindow.onafterprint = function () {
-                            printWindow.close();
-                        };
-                    };
-                }
-            </script>
 
             <?php
             $id_siswa_login = $_SESSION['id_user'];

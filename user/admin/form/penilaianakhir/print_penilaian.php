@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['hapus'])) {
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0" style="text-align:center;">Halaman Penilaian</h1>
+                <h1 class="m-0" style="text-align:center;">Laporan Penilaian</h1>
             </div>
         </div>
     </div>
