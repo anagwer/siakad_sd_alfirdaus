@@ -64,11 +64,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buat_tagihan'])) {
     exit();
 }
 ?>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h3 {
+            margin: 0;
+        }
+        .kode-guru {
+            margin-top: 20px;
+        }
+        .kode-guru table {
+            width: 50%;
+            margin: 0 auto;
+        }
+    </style>
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Halaman Pembayaran SPP</h1>
+                <h1 class="m-0" style="text-align:center;">Halaman Pembayaran SPP</h1>
             </div>
         </div>
     </div>
@@ -78,25 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buat_tagihan'])) {
     <div class="container-fluid">
 
         <?php if ($level !== 'Siswa'): ?>
-            <!-- Form Input SPP -->
-            <button type="button" class="btn btn-primary mb-3" style="margin-bottom:20px;" data-toggle="modal" data-target="#modalTambahTagihan">
-                + Tambah Tagihan SPP
-            </button>
-            <button type="button" class="btn btn-success" style="margin-bottom:20px;" onclick="printPembayaran()">
-                <i class="fa fa-print"></i> Cetak
-            </button>
-
-            <script>
-                function printPembayaran() {
-                    var printWindow = window.open('form/pembayaran/print_spp.php');
-                    printWindow.onload = function () {
-                        printWindow.print();
-                        printWindow.onafterprint = function () {
-                            printWindow.close();
-                        };
-                    };
-                }
-            </script>
 
             <?php
             $id_siswa_login = $_SESSION['id_user'];
@@ -128,51 +141,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buat_tagihan'])) {
             endif;
             $result_spp = mysqli_query($conn, $query_spp);
             ?>
-            <!-- Modal Tambah Tagihan -->
-            <div class="modal fade" id="modalTambahTagihan" tabindex="-1" role="dialog" aria-labelledby="modalTambahTagihanLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <form method="POST">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="modalTambahTagihanLabel">Tambah Tagihan SPP</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        </div>
-                        <div class="modal-body">
-                        <?php
-                        $query_kelas_modal = "SELECT * FROM kelas";
-                        $result_kelas_modal = mysqli_query($conn, $query_kelas_modal);
-                        ?>
-                        <?php if ($level === 'Administrator'): ?>
-                        <div class="form-group">
-                            <label for="id_kelas">Pilih Kelas</label>
-                            <select name="id_kelas" class="form-control" required>
-                            <option value="">-- Pilih Kelas --</option>
-                            <?php while ($row_kelas = mysqli_fetch_assoc($result_kelas_modal)): ?>
-                                <option value="<?= $row_kelas['id_kelas'] ?>"><?= $row_kelas['nama_kelas'] ?></option>
-                            <?php endwhile; ?>
-                            </select>
-                        </div>
-                        <?php else:?>
-                            <input type="hidden" name="id_kelas" value="<?php echo $id_kelas;?>">
-                        <?php endif;?>
-                        <div class="form-group">
-                            <label>Jumlah SPP</label>
-                            <input type="number" name="jumlah_spp" class="form-control" required>
-                        </div>
-                        </div>
-                        <div class="modal-footer">
-                        <button type="submit" name="buat_tagihan" class="btn btn-primary">Buat Tagihan</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-            </div>
 
             <div class="table-responsive">
-                <table class="table table-bordered" id="example1">
+                <table class="table" >
                     <thead>
                         <tr>
                             <th>NIS</th>
@@ -182,7 +153,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buat_tagihan'])) {
                             <th>Jumlah</th>
                             <th>Status</th>
                             <th>Tanggal Bayar</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -195,49 +165,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buat_tagihan'])) {
                             <td>Rp <?= number_format($data['jumlah'], 2, ',', '.') ?></td>
                             <td><?= $data['status_pembayaran'] ?></td>
                             <td><?= $data['tanggal_pembayaran'] ?: '-' ?></td>
-                            <td>
-                                <?php if ($data['status_pembayaran'] !== 'Lunas'): ?>
-                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modalKonfirmasi<?= $data['id_spp'] ?>">
-                                        Konfirmasi
-                                    </button>
-                                <?php else: ?>
-                                    <span class="text-muted">-</span>
-                                <?php endif; ?>
-                            </td>
+                            
 
                         </tr>
                         <?php endwhile; ?>
                     </tbody>
                 </table>
-                <?php
-                mysqli_data_seek($result_spp, 0); // reset pointer untuk ulangi loop modal
-                while ($data = mysqli_fetch_assoc($result_spp)):
-                    if ($data['status_pembayaran'] === 'Lunas') continue;
-                ?>
-                <div class="modal fade" id="modalKonfirmasi<?= $data['id_spp'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalLabel<?= $data['id_spp'] ?>" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <form method="POST">
-                    <input type="hidden" name="id_pembayaran" value="<?= $data['id_spp'] ?>">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel<?= $data['id_spp'] ?>">Konfirmasi Pembayaran</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        </div>
-                        <div class="modal-body">
-                        <p>Apakah kamu yakin ingin mengkonfirmasi pembayaran bulan <strong><?= $data['bulan'] ?> <?= $data['tahun'] ?></strong> untuk <strong><?= $data['nama_siswa'] ?> (<?= $data['nis'] ?>)</strong>?</p>
-                        </div>
-                        <div class="modal-footer">
-                        <button type="submit" name="edit_pembayaran" value="1" class="btn btn-success">Ya, Konfirmasi</button>
-                        <input type="hidden" name="status_pembayaran" value="Lunas">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                </div>
-                <?php endwhile; ?>
+                
 
             </div>
         <?php else: ?>

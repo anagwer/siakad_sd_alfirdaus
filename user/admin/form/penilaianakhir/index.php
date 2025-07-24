@@ -112,12 +112,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['hapus'])) {
                 </div>
             <?php } ?>
 
-        <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#tambahModal">
+        <button type="button" class="btn btn-primary"  style="margin-bottom:20px;" data-toggle="modal" data-target="#tambahModal">
             <i class="fa fa-plus"></i> Tambah Nilai
         </button>
 
         <?php endif; ?>
-        <button type="button" class="btn btn-warning mb-3" onclick="printPenilaian()">
+        <button type="button" class="btn btn-success" style="margin-bottom:20px;" onclick="printPenilaian()">
             <i class="fa fa-print"></i> Cetak
         </button>
 

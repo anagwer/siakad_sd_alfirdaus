@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['hapus'])) {
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Halaman Penilaian</h1>
+                <h1 class="m-0" style="text-align:center;">Halaman Penilaian</h1>
             </div>
         </div>
     </div>
@@ -144,12 +144,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['hapus'])) {
                 <!-- Card Info -->
                 <div class="card card-primary">
                     <div class="card-body">
-                        <h5>Kelas: <?= $nama_kelas ?></h5>
-                        <h5>Tahun Ajaran: <?= $tahun_ajaran_aktif ?></h5>
-                        <h5>Semester <?= (date('n') <= 6) ? 'Ganjil' : 'Genap'; ?></h5>
+                        <h5>Kelas: <?= $nama_kelas ?><br>
+                        Tahun Ajaran: <?= $tahun_ajaran_aktif ?><br>
+                        Semester <?= (date('n') <= 6) ? 'Ganjil' : 'Genap'; ?></h5>
                     </div>
                 </div>
             <?php } ?>
+        <?php endif;?>
 
             <div class="table-responsive">
                 <table class="table table-bordered" id="example1">
@@ -181,7 +182,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['hapus'])) {
                                             JOIN siswa s ON ks.id_siswa = s.id_siswa 
                                             WHERE ks.id_siswa = '$id_user'";
                         } else {
-                            $query_siswa = "SELECT * FROM siswa";
+                            $query_siswa = "SELECT s.id_siswa, s.nama_siswa 
+                                            FROM kelas_siswa ks 
+                                            JOIN siswa s ON ks.id_siswa = s.id_siswa ";
                         }
 
                         $result_siswa = mysqli_query($conn, $query_siswa);
@@ -223,6 +226,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['hapus'])) {
                     </tbody>
                 </table>
             </div>
-        <?php endif;?>
     </div>
 </section>

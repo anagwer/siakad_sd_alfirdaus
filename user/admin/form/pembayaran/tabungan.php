@@ -130,9 +130,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hapus_transaksi'])) {
 
         <?php if ($level !== 'Siswa'): ?>
             <!-- Tombol Tambah Transaksi -->
-            <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalTambahTransaksi">
+            <button type="button" class="btn btn-primary" style="margin-bottom:20px;" data-toggle="modal" data-target="#modalTambahTransaksi">
                 + Tambah Transaksi
             </button>
+            <button type="button" class="btn btn-success" style="margin-bottom:20px;" onclick="printPembayaran()">
+                <i class="fa fa-print"></i> Cetak
+            </button>
+
+            <script>
+                function printPembayaran() {
+                    var printWindow = window.open('form/pembayaran/print_tabungan.php');
+                    printWindow.onload = function () {
+                        printWindow.print();
+                        printWindow.onafterprint = function () {
+                            printWindow.close();
+                        };
+                    };
+                }
+            </script>
+
 
             <!-- Modal Tambah Transaksi -->
             <div class="modal fade" id="modalTambahTransaksi" tabindex="-1" role="dialog" aria-labelledby="modalLabelTransaksi" aria-hidden="true">
